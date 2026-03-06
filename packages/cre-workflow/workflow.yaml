@@ -1,0 +1,11 @@
+name: "RegReportCRE"
+id: "reg-report-cre-v1"
+triggers:
+  - id: "monthly-report"
+    type: "cron"
+    config:
+      schedule: "0 0 1 * *" # First day of every month
+capabilities:
+  - id: "http-actions@1.0.0-alpha"
+  - id: "evm@1.0.0"
+  - id: "consensus@1.0.0-alpha"

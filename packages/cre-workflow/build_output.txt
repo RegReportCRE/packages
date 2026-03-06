@@ -1,0 +1,23 @@
+
+> @regreportcre/cre-workflow@1.0.0 build
+> tsc
+
+src/fetchers/custodian.ts(18,36): error TS2339: Property 'http' does not exist on type 'Runtime<{ issuerAddress: string; reportingEpoch: number; periodLabel: string; reportRegistryAddress: string; custodianApiUrl: string; rpcUrlSepolia: string; gasLimit: number; }>'.
+src/Main.ts(28,31): error TS2339: Property 'onCron' does not exist on type '<TRawTriggerOutput extends Message<string>, TTriggerOutput, TConfig, TResult>(trigger: Trigger<TRawTriggerOutput, TTriggerOutput>, fn: HandlerFn<TConfig, TTriggerOutput, TResult>) => HandlerEntry<...>'.
+src/Main.ts(75,51): error TS2345: Argument of type '{ reportId: string; issuer: string; epoch: number; periodLabel: string; custodianData: CustodianData; onchainData: OnchainData; reconciliation: ReconciliationResult; llmAnalysis: LLMAnalysis; generatedAt: string; }' is not assignable to parameter of type 'ReportRequest | ReportRequestJson'.
+src/Main.ts(111,25): error TS2673: Constructor of class 'Runner<TConfig>' is private and only accessible within the class declaration.
+src/publishers/chain.ts(25,32): error TS2339: Property 'evmClient' does not exist on type 'Runtime<{ issuerAddress: string; reportingEpoch: number; periodLabel: string; reportRegistryAddress: string; custodianApiUrl: string; rpcUrlSepolia: string; gasLimit: number; }>'.
+src/workflow.ts(84,32): error TS2554: Expected 2 arguments, but got 1.
+src/workflow.ts(85,30): error TS2554: Expected 2 arguments, but got 1.
+src/workflow.ts(90,59): error TS2554: Expected 2 arguments, but got 3.
+src/workflow.ts(91,9): error TS2554: Expected 4 arguments, but got 3.
+src/workflow.ts(135,15): error TS2339: Property 'txHash' does not exist on type 'String'.
+src/workflow.ts(135,23): error TS2339: Property 'blockNumber' does not exist on type 'String'.
+src/workflow.ts(137,11): error TS2561: Object literal may only specify known properties, but 'reportId' does not exist in type 'Runtime<{ issuerAddress: string; reportingEpoch: number; periodLabel: string; reportRegistryAddress: string; custodianApiUrl: string; rpcUrlSepolia: string; gasLimit: number; }>'. Did you mean to write 'report'?
+npm error Lifecycle script `build` failed with error:
+npm error code 2
+npm error path /Users/ginmax/Downloads/RegReportCRE-main/packages/cre-workflow
+npm error workspace @regreportcre/cre-workflow@1.0.0
+npm error location /Users/ginmax/Downloads/RegReportCRE-main/packages/cre-workflow
+npm error command failed
+npm error command sh -c tsc
