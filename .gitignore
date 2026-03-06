@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+*.env.local
+packages/frontend/.next/
+packages/frontend/out/
+*.tsbuildinfo

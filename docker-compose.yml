@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  mock-custodian:
+    image: node:20-alpine
+    working_dir: /app
+    command: npx ts-node src/mocks/custodian-server.ts
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./packages/cre-workflow:/app
+
+  backend:
+    image: node:20-alpine
+    working_dir: /app
+    command: npx ts-node src/index.ts
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      - RPC_URL_SEPOLIA=${RPC_URL_SEPOLIA}
+      - CONTRACT_ADDRESS=${CONTRACT_ADDRESS}
+      - PINATA_API_KEY=${PINATA_API_KEY}
+      - REPORT_ENCRYPTION_KEY=${REPORT_ENCRYPTION_KEY}
+      - CUSTODIAN_API_URL=http://mock-custodian:3001
+    depends_on:
+      - mock-custodian
+    volumes:
+      - ./packages/backend:/app
+      - ./packages/contracts/deployments:/app/deployments:ro
+
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    command: npx next dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:4000
+    depends_on:
+      - backend
+    volumes:
+      - ./packages/frontend:/app
