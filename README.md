@@ -33,7 +33,8 @@ It combines:
 - [16) Troubleshooting](#16-troubleshooting)
 - [17) Demo Script](#17-demo-script)
 - [18) Security and Production Notes](#18-security-and-production-notes)
-- [19) Current Limitations](#19-current-limitations)
+- [19) Deployed Addresses](#19-deployed-addresses)
+- [20) Chainlink Usage](#20-chainlink-usage)
 
 ---
 
@@ -561,15 +562,20 @@ This script currently:
 
 ---
 
-## 19) Current Limitations
+## 19) Deployed Addresses
 
-This repository is a strong reference implementation, but some paths are intentionally simplified for demo velocity:
-
-- IPFS publisher currently mocks encryption/upload output
-- Some custodian/issuer assumptions are static in simulation defaults
-- Frontend uses demo issuer list rather than dynamic issuer registry discovery
-- Production hardening (authn/authz, key management, secrets vaulting, SLOs) is not fully implemented
+- **ReportRegistry Contract (Sepolia):** `0xEC938A4D7324721356EE4531EF5ee88D64F2B1fB`
 
 ---
 
-If you want, the next useful step is adding an `.env.example` and a one-command local bootstrap script so new contributors can run the full stack in under 2 minutes.
+## 20) Chainlink Usage
+
+This project makes extensive use of the **Chainlink CRE (Confidential Compute) SDK** to orchestrate Proof of Reserve checks.
+
+You can view the exact implementation details illustrating our Chainlink usage here:
+
+- **[Workflow Registration Metadata (workflow.yaml)](https://github.com/RegReportCRE/packages/cre-workflow/workflow.yaml):** Demonstrates our subnet configuration utilizing the `cron` trigger capability, alongside the `http-actions` capability for fetching off-chain API data, and the `evm` capability for fetching ERC-20 telemetry.
+- **[Main Pipeline Logic (src/Main.ts)](https://github.com/RegReportCRE/packages/cre-workflow/src/Main.ts):** Details our `onCronHandler` where we leverage the `@chainlink/cre-sdk` `Runtime` to fetch data asynchronously, pass it to an LLM, and build the final signed `runtime.report({...})` payload object.
+- **[EVM Attestation Publishing (src/publishers/chain.ts)](https://github.com/RegReportCRE/packages/cre-workflow/src/publishers/chain.ts):** Shows how the workflow translates the mathematically reconciled discrepancy metrics back to the EVM capability `WriteReport` parameter structure to commit the data immutably.
+
+
